@@ -4,9 +4,6 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import difflib
 
-# Importer le module Flask
-app = flask.Flask(__name__, template_folder='templates')
-
 # Charger les données à partir du fichier CSV
 df2 = pd.read_csv('./model/tmdb.csv')
 
@@ -29,6 +26,8 @@ indices = pd.Series(df2.index, index=df2['title']).drop_duplicates()
 
 # Créer une liste avec tous les titres de films
 all_titles = [df2['title'][i] for i in range(len(df2['title']))]
+
+
 
 # Fonction pour obtenir les recommandations de films
 def get_recommendations(title):
@@ -59,9 +58,12 @@ def get_recommendations(title):
     return_df['ID'] = movieid
     return return_df
 
+# Importer le module Flask
+app = flask.Flask(__name__, template_folder='templates')
 # Définir la route principale
 @app.route("/")
 @app.route("/index")
+
 def index():
     return flask.render_template('index.html')
 
